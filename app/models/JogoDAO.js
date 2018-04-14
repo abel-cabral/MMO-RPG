@@ -1,20 +1,30 @@
-//Objeto que executa a conexão
+1 //Objeto que executa a conexão
 function JogoDAO(connection) {
     this._connection = connection();
 }
 
-//Gerador de habilidades basicas e aleatória de 0 a 1000
+//Gerador de habilidades basicas e aleatória de 0 a 1000 + controlador ternário controlando valor minimo
 JogoDAO.prototype.gerar_habilidades = function (usuario) {
     this._connection.open((err, mongoclient) => {
         mongoclient.collection("jogo", (err, collection) => {
+
+            //Valores Randomicos das casas
+            var atributos = [
+                Math.floor(Math.random() * 30),
+                Math.floor(Math.random() * 20),
+                Math.floor(Math.random() * 1000),
+                Math.floor(Math.random() * 1000),
+                Math.floor(Math.random() * 1000),
+                Math.floor(Math.random() * 1000)
+            ]
             collection.insert({
                 usuario: usuario,
-                moedas: 15,
-                suditos: 10,
-                temor: Math.floor(Math.random() * 1000),
-                sabedoria: Math.floor(Math.random() * 1000),
-                comercio: Math.floor(Math.random() * 1000),
-                magia: Math.floor(Math.random() * 1000)
+                moedas: atributos[0] < 15 ? 15 : atributos[0],
+                suditos: atributos[1] < 10 ? 10 : atributos[1],
+                temor: atributos[2] < 200 ? atributos[2] + 200 : atributos[2] + 100,
+                sabedoria: atributos[3] < 200 ? atributos[3] + 200 : atributos[3] + 100,
+                comercio: atributos[4] < 200 ? atributos[4] + 200 : atributos[4] + 100,
+                magia: atributos[5] < 200 ? atributos[5] + 200 : atributos[5] + 100
             });
             mongoclient.close();
         });

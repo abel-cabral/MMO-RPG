@@ -24,10 +24,6 @@ module.exports.autenticar = (application, req, res) => {
 	const connection = application.config.dbConnection;
 	const UsuariosDAO = new application.app.models.UsuariosDAO(connection);
 
-	console.log(dados_login);
-	console.log(connection);
-	
-
 	//Consulta banco
 	UsuariosDAO.autenticar(dados_login, req, res);
 	

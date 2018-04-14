@@ -6,7 +6,7 @@ function UsuariosDAO(connection) {
 //Propriedade que grava no banco
 UsuariosDAO.prototype.inserirUsuario = function (usuario) {
     this._connection.open((err, mongoclient) => {
-        mongoclient.collection("usuarios", (err, collection) => {
+        mongoclient.collection("usuarios", (err, collection) => {           
             collection.insert(usuario);
             mongoclient.close();
         });

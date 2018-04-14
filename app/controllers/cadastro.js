@@ -25,7 +25,7 @@ module.exports.cadastrar = function (application, req, res) {
 	}
 
 	//Cria OBJ e Inicia conexao ao BD
-	const connection = application.config.dbConnection;
+	var connection = application.config.dbConnection;
 	var UsuariosDAO = new application.app.models.UsuariosDAO(connection);
 	var JogoDAO = new application.app.models.JogoDAO(connection);
 
