@@ -1,8 +1,11 @@
-module.exports.cadastro = function (application, req, res){
-	res.render('cadastro', {validacao: {}, dadosForm: {}});
+module.exports.cadastro = function (application, req, res) {
+	res.render('cadastro', {
+		validacao: {},
+		dadosForm: {}
+	});
 }
 
-module.exports.cadastrar = function(application, req, res){
+module.exports.cadastrar = function (application, req, res) {
 
 	var dadosForm = req.body;
 
@@ -13,15 +16,30 @@ module.exports.cadastrar = function(application, req, res){
 
 	var erros = req.validationErrors();
 
-	if(erros){
-		res.render('cadastro', {validacao: erros, dadosForm: dadosForm});
+	if (erros) {
+		res.render('cadastro', {
+			validacao: erros,
+			dadosForm: dadosForm
+		});
 		return;
 	}
 
-	var connection = application.config.dbConnection;
+	//Cria OBJ e Inicia conexao ao BD
+	const connection = application.config.dbConnection;
 	var UsuariosDAO = new application.app.models.UsuariosDAO(connection);
+	var JogoDAO = new application.app.models.JogoDAO(connection);
+
 
 	UsuariosDAO.inserirUsuario(dadosForm);
+	JogoDAO.gerar_habilidades(dadosForm.usuario);
 
-	res.send('podemos cadastrar')
+	//Boas Vindas
+	res.redirect('/home');
+
 }
+
+/*
+	send
+	render
+	redirect
+*/
