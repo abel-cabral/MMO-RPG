@@ -9,11 +9,19 @@ module.exports.jogo = (application, req, res) => {
 			}
 		});
 		return;
-	}
-	//Session True
-	res.render('jogo', {
-		img_casa: req.session.casa
-	});
+	}	
+	//Carregar Habilidades
+	
+	//Identificação do usuario
+	const usuario = req.session.usuario;
+	const bandeira = req.session.casa;
+
+	//Cria OBJ e Inicia conexao ao BD e Busca Atributos
+	const connection = application.config.dbConnection;
+	const JogoDAO = new application.app.models.JogoDAO(connection);
+
+	//Executa as funções pedidas
+	JogoDAO.pegar_atributos(usuario, bandeira, req, res);	
 }
 
 //Logoff
@@ -21,17 +29,4 @@ module.exports.sairJogo = (req, res) => {
 	req.session.destroy((err) => {
 		res.redirect("/home");
 	})
-}
-
-//Atributos do Jogador
-module.exports.atributosJogador = (application, req, res) => {
-	//Identificação do usuario
-	const id_jogador = req.session._id;
-
-	//Cria OBJ e Inicia conexao ao BD
-	const connection = application.config.dbConnection;
-	const JogoDAO = new application.app.models.JogoDAO(connection);
-
-	//Executa as funções pedidas
-	JogoDAO.pegar_atributos(id_jogador);
 }

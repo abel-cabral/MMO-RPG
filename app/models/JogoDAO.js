@@ -32,11 +32,15 @@ JogoDAO.prototype.gerar_habilidades = function (usuario) {
 }
 
 //Buscar Atributos do Jogador
-JogoDAO.prototype.pegar_atributos = function (id_jogador) {
+JogoDAO.prototype.pegar_atributos = function (usuario, bandeira, req, res) {
     this._connection.open((err, mongoclient) => {
         mongoclient.collection("jogo", (err, collection) => {
-            collection.find(id_jogador).toArray((err, result) => {               
-                //res.json({atributos: result});
+            collection.find({usuario: usuario}).toArray((err, result) => { 
+                res.render('jogo', {
+                    img_casa: bandeira,
+                    jogador: usuario,		
+                    habilidades: result[0]
+                });                
             });
             mongoclient.close();
         });

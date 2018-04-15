@@ -18,8 +18,7 @@ UsuariosDAO.prototype.autenticar = function (usuario, req, res) {
     this._connection.open((err, mongoclient) => {
         mongoclient.collection("usuarios", (err, collection) => {
             collection.find(usuario).toArray((err, result) => {
-
-                console.log(result[0]);
+                
                 //Comparativo de dados Informados
                 if (result[0]) {
                     //variaveis de sessao
