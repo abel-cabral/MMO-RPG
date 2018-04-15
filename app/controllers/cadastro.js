@@ -29,7 +29,7 @@ module.exports.cadastrar = function (application, req, res) {
 	var UsuariosDAO = new application.app.models.UsuariosDAO(connection);
 	var JogoDAO = new application.app.models.JogoDAO(connection);
 
-
+	//Executa as funções pedidas
 	UsuariosDAO.inserirUsuario(dadosForm);
 	JogoDAO.gerar_habilidades(dadosForm.usuario);
 

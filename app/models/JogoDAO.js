@@ -31,6 +31,18 @@ JogoDAO.prototype.gerar_habilidades = function (usuario) {
     });
 }
 
+//Buscar Atributos do Jogador
+JogoDAO.prototype.pegar_atributos = function (id_jogador) {
+    this._connection.open((err, mongoclient) => {
+        mongoclient.collection("jogo", (err, collection) => {
+            collection.find(id_jogador).toArray((err, result) => {               
+                //res.json({atributos: result});
+            });
+            mongoclient.close();
+        });
+    });
+}
+
 //Retorno do objeto com seus atributos
 module.exports = () => {
     return JogoDAO;
